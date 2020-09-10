@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>ROCK PAPER</title>
+    <link rel="icon" href="RPS.png" sizes="16x16" type="image/png">
+    <style media="screen">
+       body{
+         background-color: white;
+
+         height: 100vh;
+       }
+       section{
+         display: flex;
+         justify-content: center;
+         align-items: center;
+         top: 20px;
+       }
+       img{
+         height: 500px;
+         margin-bottom: 30px;
+       }
+
+       button{
+         padding: 10px 20px;
+         letter-spacing: 3px;
+         color: black;
+         border: 2px solid black;
+         width: 120px;
+         background-color: white;
+         cursor: pointer;
+         margin: 10px;
+       }
+
+       button:hover{
+         background-image: linear-gradient(45deg, #b0b0b0 5.56%, #cccccc 5.56%, #cccccc 50%, #b0b0b0 50%, #b0b0b0 55.56%, #cccccc 55.56%, #cccccc 100%);
+         background-size: 9.00px 9.00px;
+         box-shadow:7px 7px;
+       }
+
+       #rps {
+		       -webkit-animation: rotation 7s infinite linear;
+        }
+
+      @-webkit-keyframes rotation {
+      		from {
+      				-webkit-transform: rotate(0deg);
+      		}
+      		to {
+      				-webkit-transform: rotate(359deg);
+      		}
+}
+
+      div{
+        text-align: center;
+        text-transform: uppercase;
+        font-family: sans-serif;
+        font-size: 40px;
+      }
+    </style>
+  </head>
+  <body>
+    <section>
+
+          <img id="rps" src="RPS.png" alt="">
+    </section>
+
+    <div class="">
+      <button type="button" name="button">ROCK</button>
+      <button type="button" name="button">PAPER</button>
+      <button type="button" name="button">SCIZORS</button>
+    </div>
+
+    <div class="">
+      <img src="rock.png" alt="" style="width: 100px; height: auto;">
+      <img src="paper.png" alt="" style="width: 100px; height: auto;">
+      <img src="scissors.png" alt="" style="width: 100px; height: auto;">
+    </div>
+
+    <div class="score">
+
+    </div>
+
+    <div class="message">
+
+    </div>
+
+
+  <script>
+    const message = document.querySelector(".message");
+    const score = document.querySelector(".score");
+    const buttons = document.querySelectorAll("button")
+    console.log(buttons);
+    let winner = [0,0];
+
+    for(i=0; i<buttons.length; i++){
+      buttons[i].addEventListener("click", playGame);
+    }
+
+    function playGame(e){
+      let playerChoice = e.target.innerText;
+      let computerChoice = Math.random();
+
+      if (computerChoice < 0.34){
+        computerChoice = "ROCK";
+      } else if (computerChoice <= 0.67){
+        computerChoice = "PAPER";
+      } else {
+        computerChoice = "SCIZORS"
+      }
+
+      console.log(playerChoice, computerChoice);
+
+      let result = checkWinner(playerChoice, computerChoice);
+      console.log(result);
+
+      if(result === "YOU"){
+        result += " WIN!";
+        winner[0]++;
+      } else if (result === "COMPUTER"){
+        result += " WINS!";
+        winner[1]++;
+      } else {
+        result += ""
+      }
+
+      score.innerHTML = "You: "+winner[0] + " Computer: "+winner[1];
+
+      messager(playerChoice + " - vs - " + computerChoice + "<br><b>" + result + "</b>");
+
+      }
+
+      function messager(mes){
+        message.innerHTML = mes;
+      }
+
+      function checkWinner(pl, co){
+         if(pl===co){
+           return "Draw";
+         }
+         if(pl === "ROCK"){
+           if(co === "PAPER"){
+             return "COMPUTER";
+           } else {
+             return "YOU"
+           }
+         }
+
+         if (pl ==="PAPER"){
+           if(co === "SCIZORS"){
+             return "COMPUTER";
+           } else {
+             return "YOU";
+           }
+
+         }
+
+         if (pl ==="SCIZORS"){
+           if(co === "ROCK"){
+             return "COMPUTER";
+           } else {
+             return "YOU";
+           }
+
+         }
+      }
+
+  </script>
+  </body>
+</html>
